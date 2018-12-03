@@ -7,8 +7,8 @@
 row_spec(kable_input, row, bold = FALSE, italic = FALSE,
   monospace = FALSE, underline = FALSE, strikeout = FALSE,
   color = NULL, background = NULL, align = NULL, font_size = NULL,
-  angle = NULL, extra_css = NULL, hline_after = FALSE,
-  extra_latex_after = NULL)
+  angle = NULL, extra_css = NULL, html_class = NULL,
+  hline_after = FALSE, extra_latex_after = NULL)
 }
 \arguments{
 \item{kable_input}{Output of \code{knitr::kable()} with \code{format} specified}
@@ -49,6 +49,8 @@ options including \code{xx-small}, \code{x-small}, \code{small}, \code{medium}, 
 
 \item{extra_css}{Extra css text to be passed into the cells of the row. Note
 that it's not for the whole row.}
+
+\item{html_class}{Only for HTML table. A character string to specify a HTML class.}
 
 \item{hline_after}{T/F. A replicate of \code{hline.after} in xtable. It
 addes a hline after ther row}

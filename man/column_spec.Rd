@@ -8,7 +8,8 @@ column_spec(kable_input, column, width = NULL, bold = FALSE,
   italic = FALSE, monospace = FALSE, underline = FALSE,
   strikeout = FALSE, color = NULL, background = NULL,
   border_left = FALSE, border_right = FALSE, width_min = NULL,
-  width_max = NULL, extra_css = NULL, include_thead = FALSE)
+  width_max = NULL, extra_css = NULL, html_class = NULL,
+  include_thead = FALSE)
 }
 \arguments{
 \item{kable_input}{Output of \code{knitr::kable()} with \code{format} specified}
@@ -57,6 +58,8 @@ of table columns.}
 
 \item{extra_css}{Extra css text to be passed into the cells of the row. Note
 that it's not for the whole column but to each individual cells}
+
+\item{html_class}{Only for HTML table. A character string to specify a HTML class.}
 
 \item{include_thead}{T/F. A HTML only feature to contoll whether the
 header row will be manipulated. Default is \code{FALSE}.}

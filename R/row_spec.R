@@ -29,6 +29,7 @@
 #' @param angle 0-360, degree that the text will rotate.
 #' @param extra_css Extra css text to be passed into the cells of the row. Note
 #' that it's not for the whole row.
+#' @param html_class Only for HTML table. A character string to specify a HTML class.
 #' @param hline_after T/F. A replicate of `hline.after` in xtable. It
 #' addes a hline after ther row
 #' @param extra_latex_after Extra LaTeX text to be added after the row. Similar
@@ -43,7 +44,8 @@ row_spec <- function(kable_input, row,
                      underline = FALSE, strikeout = FALSE,
                      color = NULL, background = NULL, align = NULL,
                      font_size = NULL, angle = NULL, extra_css = NULL,
-                     hline_after = FALSE, extra_latex_after = NULL) {
+                     html_class = NULL, hline_after = FALSE,
+                     extra_latex_after = NULL) {
   if (!is.numeric(row)) {
     stop("row must be numeric. ")
   }
@@ -58,7 +60,7 @@ row_spec <- function(kable_input, row,
     return(row_spec_html(kable_input, row, bold, italic, monospace,
                          underline, strikeout,
                          color, background, align, font_size, angle,
-                         extra_css))
+                         extra_css, html_class))
   }
   if (kable_format == "latex") {
     return(row_spec_latex(kable_input, row, bold, italic, monospace,
@@ -71,7 +73,7 @@ row_spec <- function(kable_input, row,
 row_spec_html <- function(kable_input, row, bold, italic, monospace,
                           underline, strikeout,
                           color, background, align, font_size, angle,
-                          extra_css) {
+                          extra_css, html_class) {
   kable_attrs <- attributes(kable_input)
   kable_xml <- read_kable_as_xml(kable_input)
 
@@ -88,7 +90,7 @@ row_spec_html <- function(kable_input, row, bold, italic, monospace,
       target_header_cell <- xml_child(original_header_row, theader_i)
       xml_cell_style(target_header_cell, bold, italic, monospace,
                      underline, strikeout, color, background,
-                     align, font_size, angle, extra_css)
+                     align, font_size, angle, extra_css, html_class)
     }
     row <- row[row != 0]
   }
@@ -108,7 +110,7 @@ row_spec_html <- function(kable_input, row, bold, italic, monospace,
         target_cell <- xml_child(target_row, i)
         xml_cell_style(target_cell, bold, italic, monospace,
                        underline, strikeout, color, background,
-                       align, font_size, angle, extra_css)
+                       align, font_size, angle, extra_css, html_class)
       }
     }
   }
@@ -121,7 +123,7 @@ row_spec_html <- function(kable_input, row, bold, italic, monospace,
 
 xml_cell_style <- function(x, bold, italic, monospace,
                            underline, strikeout, color, background,
-                           align, font_size, angle, extra_css) {
+                           align, font_size, angle, extra_css, html_class) {
   if (is.na(xml_attr(x, "style"))) {
     xml_attr(x, "style") <- ""
   }
@@ -173,6 +175,9 @@ xml_cell_style <- function(x, bold, italic, monospace,
   }
   if (!is.null(extra_css)) {
     xml_attr(x, "style") <- paste0(xml_attr(x, "style"), extra_css)
+  }
+  if (!is.null(html_class)) {
+    xml_attr(x, "class") <- html_class
   }
   return(x)
 }
